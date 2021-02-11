@@ -1,0 +1,35 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory app:title="@string/setting_category_general">
+
+        <Preference
+            android:key="change_working_dir"
+            android:summary="@string/setting_summary_change_working_dir"
+            android:title="@string/setting_title_change_working_dir" />
+
+        <Preference
+            android:key="change_pwd"
+            android:title="@string/setting_title_change_pwd" />
+
+        <Preference
+            android:key="reset_view_count"
+            android:summary="@string/setting_summary_reset_view_count"
+            android:title="@string/setting_title_reset_view_count" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="@string/setting_category_database_backup">
+        <CheckBoxPreference
+            android:key="use_auto_backup"
+            android:summary="@string/setting_summary_auto_backup"
+            android:title="@string/setting_title_auto_backup"
+            android:defaultValue="true" />
+
+        <Preference
+            android:key="backup_now"
+            android:summary="@string/setting_summary_backup_now"
+            android:title="@string/setting_title_backup_now" />
+    </PreferenceCategory>
+
+</PreferenceScreen>

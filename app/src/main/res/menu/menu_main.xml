@@ -1,0 +1,19 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.vaultapp.MainActivity">
+    <item
+        android:id="@+id/menu_clear_thumbnail"
+        android:title="@string/menu_reset_folder_thumbnail" />
+    <item
+        android:id="@+id/menu_sorting"
+        android:title="@string/menu_change_sort" />
+    <item
+        android:id="@+id/menu_tag_filter"
+        android:title="@string/menu_tag_filter" />
+    <item
+        android:id="@+id/menu_create_folder"
+        android:title="@string/menu_add_folder" />
+    <item
+        android:id="@+id/menu_settings"
+        android:title="@string/activity_settings" />
+</menu>

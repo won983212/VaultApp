@@ -1,0 +1,108 @@
+<resources>
+    <string name="app_name">보안폴더</string>
+    <string name="activity_settings">설정</string>
+
+    <string name="menu_add_file">파일 추가</string>
+    <string name="menu_add_folder">폴더 추가</string>
+    <string name="menu_reset_folder_thumbnail">폴더 썸내일 초기화</string>
+    <string name="menu_change_sort">정렬</string>
+    <string name="menu_delete">삭제</string>
+    <string name="menu_extract">꺼내기</string>
+    <string name="menu_move">이동</string>
+    <string name="menu_change_name">이름 변경</string>
+    <string name="menu_set_as_thumbnail">썸내일로 설정</string>
+    <string name="menu_set_thumbnail_auto">폴더 썸내일 자동 설정</string>
+    <string name="menu_tag_filter">태그 필터</string>
+
+    <string name="login_input_pwd">비밀번호를 입력하세요.</string>
+    <string name="login_retry_later">%1$d회 틀렸습니다. %2$d초 후에 다시 시도하세요."</string>
+    <string name="login_retry_put_pwd">비밀번호를 다시 입력하세요.</string>
+    <string name="login_go_app">앱으로 이동합니다.</string>
+    <string name="login_not_match_pwd">비밀번호가 일치하지 않습니다. 다시 설정하세요.</string>
+    <string name="login_set_complete_pwd">설정되었습니다.</string>
+    <string name="login_set_pwd_again">설정한 비밀번호를 한번 더 입력하세요.</string>
+    <string name="login_set_initial_pwd">설정할 비밀번호를 입력하세요.</string>
+
+    <string name="dialog_title_create_folder">폴더 생성</string>
+    <string name="dialog_message_create_folder">생성할 폴더의 이름을 입력하세요.</string>
+    <string name="dialog_title_change_name">이름 변경</string>
+    <string name="dialog_message_change_name">새로운 이름을 입력하세요.</string>
+    <string name="dialog_title_select_sort_type">정렬 방식 선택</string>
+    <string name="dialog_message_copying_file">파일을 복사하는 중입니다..</string>
+    <string name="dialog_message_ejecting_file">파일을 꺼내는 중입니다..</string>
+    <string name="dialog_message_deleting_file">파일을 삭제하는 중입니다..</string>
+    <string name="dialog_message_want_to_delete_file">정말로 선택한 %1$d개의 파일을 삭제하시겠습니까?</string>
+    <string name="dialog_message_moving_file">파일을 이동하는 중입니다..</string>
+    <string name="dialog_message_eject_file">선택한 %1$d개 파일의 암호화를 해제하고 꺼냅니다. 꺼내면 \'수정날짜\' 정보가 삭제됩니다. 미리 DB백업해두세요.</string>
+    <string name="dialog_message_loading_db">DB를 불러오고 있습니다.</string>
+    <string name="dialog_title_tag_filter">태그 필터</string>
+    <string name="dialog_message_tag_filter">보고싶은 태그를 입력하세요. 두 개 이상의 태그는 스페이스바로 구분하며 태그들을 모두 포함하는 미디어만 표시합니다.</string>
+
+    <string name="dialog_button_ok">확인</string>
+    <string name="dialog_button_cancel">취소</string>
+    <string name="dialog_button_yes">네</string>
+    <string name="dialog_button_no">아니오</string>
+
+    <string name="toast_info_folder_created">폴더가 생성되었습니다.</string>
+    <string name="toast_info_cleared_thumbnail">썸내일을 초기화했습니다.</string>
+    <string name="toast_info_added_file">파일이 추가되었습니다.</string>
+    <string name="toast_info_added_folder">폴더가 추가되었습니다.</string>
+    <string name="toast_info_ejected_file">%1$d개 파일을 꺼냈습니다.</string>
+    <string name="toast_info_deleted_file">%1$d개의 파일이 삭제되었습니다.</string>
+    <string name="toast_info_changed_thumbnail">썸내일을 변경했습니다.</string>
+    <string name="toast_info_set_thumbnail_auto">%1$d개 폴더의 썸내일을 자동으로 설정했습니다.</string>
+    <string name="toast_info_cancelled_select">선택이 취소되었습니다.</string>
+    <string name="toast_info_file_moved">%1$d개의 파일이 이동되었습니다.</string>
+    <string name="toast_info_name_changed">이름을 변경했습니다.</string>
+    <string name="toast_info_cleared_view_count">열람 횟수가 전부 초기화되었습니다.</string>
+    <string name="toast_info_backup_complete">백업되었습니다. 백업본은 이름 뒤에 -backup이 붙습니다.</string>
+    <string name="toast_info_tags_saved">태그가 저장되었습니다.</string>
+
+    <string name="toast_error_folder_name_empty">폴더 이름을 입력해주세요.</string>
+    <string name="toast_error_cannot_create_folder">폴더를 생성하는 도중 오류가 발생했습니다.</string>
+    <string name="toast_error_cannot_clear_thumbnail">썸내일을 초기화할 수 없습니다.</string>
+    <string name="toast_error_cannot_retrieve_data">데이터를 얻어올 수 없었습니다.</string>
+    <string name="toast_error_cannot_add_file">파일을 추가하는 도중 오류가 발생했습니다.</string>
+    <string name="toast_error_not_supported_format">지원하지 않는 포맷입니다.</string>
+    <string name="toast_error_cannot_add_folder">폴더를 추가하는 동안 오류가 발생했습니다.</string>
+    <string name="toast_error_cannot_eject">파일을 꺼내는 도중 오류가 발생했습니다.</string>
+    <string name="toast_error_cannot_get_permission">권한을 얻어오지 못했습니다.</string>
+    <string name="toast_error_cannot_delete_file">파일을 삭제하는 도중 오류가 발생했습니다.</string>
+    <string name="toast_error_cannot_change_thumbnail">썸내일을 변경할 수 없습니다.</string>
+    <string name="toast_error_folder_is_not_in_db">폴더가 DB에 없습니다: %1$s</string>
+    <string name="toast_error_failed_explore">탐색 실패</string>
+    <string name="toast_error_cannot_move_to_original">원본 위치로 이동할 수 없습니다.</string>
+    <string name="toast_error_cannot_move_to_in_same">%1$s 폴더를 같은 폴더안에 복사할 수 없습니다.</string>
+    <string name="toast_error_cannot_move_file">파일을 이동하는 도중에 오류가 발생했습니다.</string>
+    <string name="toast_error_name_is_empty">이름을 입력해주세요.</string>
+    <string name="toast_error_cannot_backup_db">DB 백업 실패</string>
+    <string name="toast_error_cannot_change_name">이름을 변경할 수 없습니다.</string>
+    <string name="toast_error_empty_tag_name">태그 이름을 입력해주세요.</string>
+
+    <string name="actionbar_n_selected">%1$d개 선택됨</string>
+    <string name="move_n_selected">%1$d개의 파일</string>
+    <string name="move_select_here">여기로 이동</string>
+
+    <string name="setting_category_general">기본 설정</string>
+    <string name="setting_category_database_backup">데이터베이스 백업</string>
+
+    <string name="setting_title_change_working_dir">데이터 저장 위치 재설정</string>
+    <string name="setting_summary_change_working_dir">암호화 데이터의 저장 위치를 다시 설정합니다.</string>
+    <string name="setting_title_change_pwd">비밀번호 재설정</string>
+    <string name="setting_title_reset_view_count">열람 횟수 초기화</string>
+    <string name="setting_summary_reset_view_count">모든 미디어의 열람 횟수를 0으로 재설정합니다.</string>
+    <string name="setting_title_auto_backup">자동으로 DB 백업하기</string>
+    <string name="setting_summary_auto_backup">DB작업이 끝날때마다 백업합니다.</string>
+    <string name="setting_title_backup_now">지금 DB 백업</string>
+    <string name="setting_summary_backup_now">자동 DB백업과 달리 이름에 backup이 붙습니다.</string>
+
+    <string name="overlay_play_video">동영상 재생</string>
+    <string name="detail_dialog_view_count">%1$d 회 열람함</string>
+    <string name="detail_dialog_no_tags">설정된 태그 없음</string>
+    <string name="detail_dialog_title">상세정보</string>
+    <string name="detail_dialog_add_tag">태그 추가</string>
+    <string name="detail_dialog_edit_tag">태그 편집</string>
+    <string name="detail_dialog_edit_tag_complete">저장</string>
+    <string name="detail_dialog_add_tag_message">추가할 태그를 입력해주세요.</string>
+
+</resources>

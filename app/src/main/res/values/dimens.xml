@@ -1,0 +1,6 @@
+<resources>
+    <dimen name="dialog_margin">25dp</dimen>
+    <dimen name="media_item_time_len_size">10sp</dimen>
+    <dimen name="keypad_text_size">20sp</dimen>
+    <dimen name="keypad_pin_viewer_margin">4dp</dimen>
+</resources>

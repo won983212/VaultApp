@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/set_thumbnail_auto_menu"
+        android:icon="@drawable/ic_set_thumbnail"
+        app:showAsAction="never"
+        android:title="@string/menu_set_thumbnail_auto" />
+    <item
+        android:id="@+id/set_thumbnail_menu"
+        android:icon="@drawable/ic_set_thumbnail"
+        app:showAsAction="never"
+        android:title="@string/menu_set_as_thumbnail" />
+    <item
+        android:id="@+id/rename_menu"
+        android:icon="@drawable/ic_edit"
+        app:showAsAction="ifRoom"
+        android:title="@string/menu_change_name" />
+    <item
+        android:id="@+id/move_menu"
+        android:icon="@drawable/ic_file_move"
+        app:showAsAction="never"
+        android:title="@string/menu_move" />
+    <item
+        android:id="@+id/eject_menu"
+        android:icon="@drawable/ic_eject"
+        app:showAsAction="never"
+        android:title="@string/menu_extract" />
+    <item
+        android:id="@+id/delete_menu"
+        android:icon="@drawable/ic_delete"
+        app:showAsAction="never"
+        android:title="@string/menu_delete" />
+    <item
+        android:id="@+id/detail_menu"
+        android:icon="@android:drawable/ic_menu_info_details"
+        app:showAsAction="ifRoom"
+        android:title="@string/detail_dialog_title" />
+</menu>
