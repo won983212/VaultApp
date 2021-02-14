@@ -117,6 +117,10 @@ public class MediaDatabaseManager {
     }
 
     public void setPath(String path) {
+        setPath(path, null);
+    }
+
+    public void setPath(String path, Runnable callback) {
         this.path = path;
         Usefuls.newTask(() -> {
             List<MediaFileInfoEntity> list = db.mediaFileInfoDao().getAllFilesOnPath(path);
@@ -140,11 +144,11 @@ public class MediaDatabaseManager {
                     }
                 }
             }
-            sortAndNotify();
+            sortAndNotify(callback);
         });
     }
 
-    public void sortAndNotify() {
+    public void sortAndNotify(Runnable callback) {
         synchronized (currentPathDataLock) {
             if (path.equals("/")) {
                 Collections.sort(currentPathData, MediaItemSorts.FILE_NAME_ASCENDING);
@@ -158,9 +162,8 @@ public class MediaDatabaseManager {
             }
 
             VaultApp.post(() -> {
-                if (dbUpdateEvent != null) {
-                    dbUpdateEvent.onNotify(currentPathData);
-                }
+                if (dbUpdateEvent != null)
+                    dbUpdateEvent.onNotify(currentPathData, callback);
             });
         }
     }
@@ -173,7 +176,7 @@ public class MediaDatabaseManager {
         return false;
     }
 
-    public boolean exploreBack(int count) {
+    public boolean exploreBack(int count, Runnable callback) {
         String dest = path;
 
         if (count <= 0)
@@ -184,7 +187,7 @@ public class MediaDatabaseManager {
             dest = dest.substring(0, dest.lastIndexOf('/', dest.length() - 2) + 1);
         }
 
-        setPath(dest);
+        setPath(dest, callback);
         return true;
     }
 
@@ -244,7 +247,7 @@ public class MediaDatabaseManager {
     public void changeSortType(MediaItem item, int typeIndex) {
         item.sortType = typeIndex;
         db.mediaFileInfoDao().updateSortType(item.obfuscatedName, typeIndex);
-        sortAndNotify();
+        sortAndNotify(null);
         VaultApp.post(() -> {
             if (dbUpdateEvent != null) {
                 dbUpdateEvent.onDataSetUpdated();
@@ -403,7 +406,7 @@ public class MediaDatabaseManager {
             // notify changes
             VaultApp.post(() -> {
                 if (dbUpdateEvent != null) {
-                    dbUpdateEvent.onNotify(currentPathData);
+                    dbUpdateEvent.onNotify(currentPathData, null);
                 }
             });
         }

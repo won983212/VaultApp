@@ -9,5 +9,5 @@ public interface OnNotifyDataEvent {
 
     void onDataSetUpdated();
 
-    void onNotify(List<MediaItem> list);
+    void onNotify(List<MediaItem> list, Runnable callback);
 }

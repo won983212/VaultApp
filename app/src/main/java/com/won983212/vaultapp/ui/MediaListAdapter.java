@@ -77,8 +77,8 @@ public class MediaListAdapter extends RecyclerView.Adapter<MediaListViewHolder> 
     }
 
     @Override
-    public void onNotify(List<MediaItem> list) {
-        mDiffer.submitList(new ArrayList<>(list));
+    public void onNotify(List<MediaItem> list, Runnable callback) {
+        mDiffer.submitList(new ArrayList<>(list), callback);
     }
 
     public void setItemEventListener(ItemEventCallback listener) {

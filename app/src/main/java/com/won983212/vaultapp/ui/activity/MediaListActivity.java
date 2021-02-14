@@ -48,10 +48,12 @@ import com.won983212.vaultapp.ui.ItemEventCallback;
 import com.won983212.vaultapp.ui.MediaListAdapter;
 import com.won983212.vaultapp.ui.MediaListViewHolder;
 import com.won983212.vaultapp.ui.dialog.MediaDetailDialog;
+import com.won983212.vaultapp.util.Logger;
 import com.won983212.vaultapp.util.MediaItemSorts;
 import com.won983212.vaultapp.util.Usefuls;
 
 import java.util.ArrayList;
+import java.util.Stack;
 
 import moe.feng.common.view.breadcrumbs.BreadcrumbsCallback;
 import moe.feng.common.view.breadcrumbs.BreadcrumbsView;
@@ -68,9 +70,12 @@ public class MediaListActivity extends AppCompatActivity implements ItemEventCal
     private ChipGroup tagFilters;
     private CoordinatorLayout rootLayout;
 
+    private GridLayoutManager layoutManager;
     private MediaListAdapter adapter;
     private MediaDatabaseManager dataManager;
+    private RecyclerView recyclerView;
 
+    private Stack<Integer> scrollStack = new Stack<>();
     private Snackbar fileMoveSnackbar = null;
     private ActionMode actionMode = null;
     private TextView actionBarSelectionTextView = null;
@@ -119,7 +124,17 @@ public class MediaListActivity extends AppCompatActivity implements ItemEventCal
                 if (position != view.getItems().size() - 1) {
                     int prevLen = view.getItems().size();
                     view.removeItemAfter(position + 1);
-                    dataManager.exploreBack(prevLen - view.getItems().size());
+
+                    final int count = prevLen - view.getItems().size();
+                    dataManager.exploreBack(count, () -> {
+                        int scroll = RecyclerView.NO_POSITION;
+                        for (int i = 0; i < count; i++) {
+                            scroll = scrollStack.pop();
+                        }
+                        if (scroll != RecyclerView.NO_POSITION) {
+                            layoutManager.scrollToPosition(scroll);
+                        }
+                    });
                 }
             }
 
@@ -134,10 +149,9 @@ public class MediaListActivity extends AppCompatActivity implements ItemEventCal
 
         adapter = new MediaListAdapter(dataManager);
         adapter.setItemEventListener(this);
+        layoutManager = new GridLayoutManager(this, 4);
 
-        GridLayoutManager layoutManager = new GridLayoutManager(this, 4);
-
-        RecyclerView recyclerView = findViewById(R.id.recyclerView);
+        recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
 
@@ -146,7 +160,7 @@ public class MediaListActivity extends AppCompatActivity implements ItemEventCal
 
     @Override
     public void onBackPressed() {
-        if (!dataManager.exploreBack(1)) {
+        if (!dataManager.exploreBack(1, () -> layoutManager.scrollToPosition(scrollStack.pop()))) {
             super.onBackPressed();
         } else {
             breadcrumbs.removeLastItem();
@@ -345,6 +359,7 @@ public class MediaListActivity extends AppCompatActivity implements ItemEventCal
                 if (item.isDirectory()) {
                     if (dataManager.explore(item)) {
                         breadcrumbs.addItem(BreadcrumbItem.createSimpleItem(item.title));
+                        scrollStack.push(layoutManager.findLastCompletelyVisibleItemPosition());
                     } else {
                         Toast.makeText(this, R.string.toast_error_failed_explore, Toast.LENGTH_SHORT).show();
                     }
@@ -632,7 +647,7 @@ public class MediaListActivity extends AppCompatActivity implements ItemEventCal
                     .setPositiveButton(R.string.dialog_button_ok, onClickListener)
                     .setNegativeButton(R.string.dialog_button_cancel, onClickListener).show();
             return true;
-        } else if(itemId == R.id.detail_menu){
+        } else if (itemId == R.id.detail_menu) {
             int index = selection.keyAt(0);
             MediaDetailDialog dialog = new MediaDetailDialog(this, dataManager.get(index));
             dialog.show();
@@ -668,7 +683,7 @@ public class MediaListActivity extends AppCompatActivity implements ItemEventCal
                         StringBuilder sb = new StringBuilder();
                         for (int cnt = tagFilters.getChildCount(), i = 0; i < cnt; i++) {
                             sb.append(((Chip) tagFilters.getChildAt(i)).getText());
-                            if(i < cnt - 1)
+                            if (i < cnt - 1)
                                 sb.append(' ');
                         }
                         dataManager.setTagString(sb.toString());
