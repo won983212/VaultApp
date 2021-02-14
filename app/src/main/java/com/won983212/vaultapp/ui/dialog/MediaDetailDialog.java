@@ -68,7 +68,7 @@ public class MediaDetailDialog extends Dialog {
         pathText.setText(item.getFormattedPath());
 
         TextView sizeText = findViewById(R.id.detail_dialog_sizeText);
-        if(item.isDirectory()){
+        if (item.isDirectory()) {
             sizeText.setVisibility(View.GONE);
         } else {
             sizeText.setText(getFormattedFileSize());

@@ -48,7 +48,6 @@ import com.won983212.vaultapp.ui.ItemEventCallback;
 import com.won983212.vaultapp.ui.MediaListAdapter;
 import com.won983212.vaultapp.ui.MediaListViewHolder;
 import com.won983212.vaultapp.ui.dialog.MediaDetailDialog;
-import com.won983212.vaultapp.util.Logger;
 import com.won983212.vaultapp.util.MediaItemSorts;
 import com.won983212.vaultapp.util.Usefuls;
 
@@ -73,9 +72,8 @@ public class MediaListActivity extends AppCompatActivity implements ItemEventCal
     private GridLayoutManager layoutManager;
     private MediaListAdapter adapter;
     private MediaDatabaseManager dataManager;
-    private RecyclerView recyclerView;
 
-    private Stack<Integer> scrollStack = new Stack<>();
+    private final Stack<Integer> scrollStack = new Stack<>();
     private Snackbar fileMoveSnackbar = null;
     private ActionMode actionMode = null;
     private TextView actionBarSelectionTextView = null;
@@ -151,7 +149,7 @@ public class MediaListActivity extends AppCompatActivity implements ItemEventCal
         adapter.setItemEventListener(this);
         layoutManager = new GridLayoutManager(this, 4);
 
-        recyclerView = findViewById(R.id.recyclerView);
+        RecyclerView recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
 

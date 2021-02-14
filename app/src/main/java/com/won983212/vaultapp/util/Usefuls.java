@@ -75,7 +75,7 @@ public class Usefuls {
 
         AlertDialog dialog = builder.show();
         input.setOnKeyListener((v, key, e) -> {
-            if(key == KeyEvent.KEYCODE_ENTER){
+            if (key == KeyEvent.KEYCODE_ENTER) {
                 callback.onAccept(input.getText().toString());
                 dialog.dismiss();
             }

@@ -136,7 +136,7 @@ public class MediaDatabaseManager {
                             for (String tag : item.tags) {
                                 if (tagFilters.contains(tag) && ++count == tagFilters.size()) break;
                             }
-                            if(count == tagFilters.size())
+                            if (count == tagFilters.size())
                                 currentPathData.add(item);
                         }
                     } else {
