@@ -40,6 +40,10 @@ public class MediaDatabaseManager {
      **/
     private String path = "/";
 
+    public boolean hasInitialzed() {
+        return db != null;
+    }
+
     public void setupDatas(Context context) {
         db = MediaFileDatabase.getInstance(context);
         preferences = PreferenceManager.getDefaultSharedPreferences(context);
@@ -230,13 +234,16 @@ public class MediaDatabaseManager {
     public boolean changeThumbnailToFirstMedia(String folderName) {
         MediaItem folder = mediaItemCache.get(folderName);
         String target;
-        List<MediaFileInfoEntity> ents = db.mediaFileInfoDao().getMediasOnPath(folder.getFileURL() + "/");
-        if (!ents.isEmpty()) {
-            target = ents.get(0).obfuscatedName;
-            return changeThumbnail(folderName, target);
-        } else {
-            return true;
+        if (folder != null) {
+            List<MediaFileInfoEntity> ents = db.mediaFileInfoDao().getMediasOnPath(folder.getFileURL() + "/");
+            if (!ents.isEmpty()) {
+                target = ents.get(0).obfuscatedName;
+                return changeThumbnail(folderName, target);
+            } else {
+                return true;
+            }
         }
+        return false;
     }
 
     public void changePath(MediaItem item, String path) {

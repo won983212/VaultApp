@@ -19,6 +19,7 @@ import com.won983212.vaultapp.R;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Objects;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
     private static final String PWD_KEY = "pwd";
@@ -102,7 +103,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private boolean checkPassword() {
-        return encrypt(String.valueOf(password)).equals(preferences.getString(PWD_KEY, ""));
+        return Objects.equals(encrypt(String.valueOf(password)), preferences.getString(PWD_KEY, ""));
     }
 
     private void processCheckPassword() {

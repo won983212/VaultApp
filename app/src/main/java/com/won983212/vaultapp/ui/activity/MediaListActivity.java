@@ -6,6 +6,7 @@ import android.content.ClipData;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.SparseBooleanArray;
@@ -141,19 +142,39 @@ public class MediaListActivity extends AppCompatActivity implements ItemEventCal
             }
         });
 
-        if (ROOT_FILE_MANAGER.requestSetRootPath(this, REQ_SET_ROOT_FILE_PATH)) {
+        if (!dataManager.hasInitialzed() && ROOT_FILE_MANAGER.requestSetRootPath(this, REQ_SET_ROOT_FILE_PATH)) {
             dataManager.setupDatas(this);
         }
 
+        int orientation = getResources().getConfiguration().orientation;
+
         adapter = new MediaListAdapter(dataManager);
         adapter.setItemEventListener(this);
-        layoutManager = new GridLayoutManager(this, 4);
+        layoutManager = new GridLayoutManager(this, orientation == Configuration.ORIENTATION_LANDSCAPE ? 8 : 4);
 
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
 
         AutoPermissions.Companion.loadAllPermissions(this, 101);
+
+        if (savedInstanceState != null) {
+            int pathCnt = savedInstanceState.getInt("pathCount");
+            for (int i = 0; i < pathCnt; i++) {
+                scrollStack.push(0);
+            }
+            String path = savedInstanceState.getString("path");
+            if (path != null) {
+                dataManager.setPath(path);
+            }
+        }
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString("path", dataManager.getPath());
+        outState.putInt("pathCount", scrollStack.size());
     }
 
     @Override

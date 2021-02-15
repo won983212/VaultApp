@@ -12,6 +12,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 
 import com.won983212.vaultapp.ContentFileHandler;
@@ -80,17 +81,24 @@ public class SettingsActivity extends AppCompatActivity {
             this.activity = activity;
         }
 
+        private Preference find(String key) {
+            Preference p = findPreference(key);
+            if (p == null)
+                throw new NullPointerException("setting key " + key);
+            return p;
+        }
+
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
             setPreferencesFromResource(R.xml.root_preferences, rootKey);
-            findPreference("change_working_dir").setOnPreferenceClickListener(preference -> {
+            find("change_working_dir").setOnPreferenceClickListener(preference -> {
                 ContentFileHandler fileManager = ContentFileHandler.getInstance();
                 fileManager.clearSelectedURI();
                 fileManager.requestSetRootPath(activity, REQ_RESET_ROOT_DIR);
                 return true;
             });
 
-            findPreference("change_pwd").setOnPreferenceClickListener(preference -> {
+            find("change_pwd").setOnPreferenceClickListener(preference -> {
                 SharedPreferences preferences = activity.getSharedPreferences("password", MODE_PRIVATE);
                 preferences.edit().clear().apply();
                 Intent intent = new Intent(activity, LoginActivity.class);
@@ -98,8 +106,8 @@ public class SettingsActivity extends AppCompatActivity {
                 return true;
             });
 
-            findPreference("reset_view_count").setOnPreferenceClickListener(preference -> {
-                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+            find("reset_view_count").setOnPreferenceClickListener(preference -> {
+                AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
                 builder.setMessage("모든 파일의 조회수가 0으로 초기화됩니다. 진행하시겠습니까?")
                         .setPositiveButton(R.string.dialog_button_ok, (dialog, which) -> Usefuls.newTask(() -> {
                             VaultApp.getInstance().getDataManager().clearViewCount();
@@ -109,7 +117,7 @@ public class SettingsActivity extends AppCompatActivity {
                 return true;
             });
 
-            findPreference("backup_now").setOnPreferenceClickListener(preference -> {
+            find("backup_now").setOnPreferenceClickListener(preference -> {
                 final Context ctx = getContext();
                 final ProgressDialog dialog = Usefuls.createIndeterminateProgressDialog(ctx, R.string.dialog_message_loading_db);
                 Usefuls.newTask(() -> {
