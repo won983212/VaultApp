@@ -104,5 +104,6 @@
     <string name="detail_dialog_edit_tag">태그 편집</string>
     <string name="detail_dialog_edit_tag_complete">저장</string>
     <string name="detail_dialog_add_tag_message">추가할 태그를 입력해주세요.</string>
+    <string name="menu_refresh">새로고침</string>
 
 </resources>

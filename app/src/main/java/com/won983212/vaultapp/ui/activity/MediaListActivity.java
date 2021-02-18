@@ -142,7 +142,9 @@ public class MediaListActivity extends AppCompatActivity implements ItemEventCal
             }
         });
 
-        if (!dataManager.hasInitialzed() && ROOT_FILE_MANAGER.requestSetRootPath(this, REQ_SET_ROOT_FILE_PATH)) {
+        if (dataManager.hasInitialzed()) {
+            dataManager.setPath("/");
+        } else if (ROOT_FILE_MANAGER.requestSetRootPath(this, REQ_SET_ROOT_FILE_PATH)) {
             dataManager.setupDatas(this);
         }
 
@@ -254,6 +256,9 @@ public class MediaListActivity extends AppCompatActivity implements ItemEventCal
                 dataManager.setTagString(input);
                 updateTagList(input);
             });
+            return true;
+        } else if (id == R.id.menu_refresh) {
+            dataManager.setPath(dataManager.getPath());
             return true;
         }
 
