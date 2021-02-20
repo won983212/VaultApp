@@ -131,6 +131,11 @@ public class SettingsActivity extends AppCompatActivity {
                 });
                 return true;
             });
+
+            find("show_all_tags").setOnPreferenceClickListener(preference -> {
+                // TODO Show all tags
+                return true;
+            });
         }
     }
 }

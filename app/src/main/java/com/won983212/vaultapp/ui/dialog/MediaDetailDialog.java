@@ -94,25 +94,28 @@ public class MediaDetailDialog extends Dialog {
                 for (String tag : tags.split(" "))
                     addTag(tag);
                 updateTagGroupVisibility();
+                toggleEditMode(addTagButton, editTagButton);
             } else {
                 Usefuls.threadSafeToast(getContext(), R.string.toast_error_empty_tag_name, Toast.LENGTH_LONG);
             }
         }));
 
-        editTagButton.setOnClickListener((v) -> {
-            Context ctx = getContext();
-            isEditMode = !isEditMode;
-            if (isEditMode) {
-                addTagButton.setVisibility(View.VISIBLE);
-                editTagButton.setText(ctx.getString(R.string.detail_dialog_edit_tag_complete));
-                iterateTagView(tagView -> tagView.setCloseIconVisible(true));
-            } else {
-                saveToDatabase();
-                addTagButton.setVisibility(View.INVISIBLE);
-                editTagButton.setText(ctx.getString(R.string.detail_dialog_edit_tag));
-                iterateTagView(tagView -> tagView.setCloseIconVisible(false));
-            }
-        });
+        editTagButton.setOnClickListener((v) -> toggleEditMode(addTagButton, editTagButton));
+    }
+
+    private void toggleEditMode(Button addTagButton, Button editTagButton){
+        Context ctx = getContext();
+        isEditMode = !isEditMode;
+        if (isEditMode) {
+            addTagButton.setVisibility(View.VISIBLE);
+            editTagButton.setText(ctx.getString(R.string.detail_dialog_edit_tag_complete));
+            iterateTagView(tagView -> tagView.setCloseIconVisible(true));
+        } else {
+            saveToDatabase();
+            addTagButton.setVisibility(View.INVISIBLE);
+            editTagButton.setText(ctx.getString(R.string.detail_dialog_edit_tag));
+            iterateTagView(tagView -> tagView.setCloseIconVisible(false));
+        }
     }
 
     private void updateTagGroupVisibility() {
