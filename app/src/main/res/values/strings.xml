@@ -13,6 +13,8 @@
     <string name="menu_set_as_thumbnail">썸내일로 설정</string>
     <string name="menu_set_thumbnail_auto">폴더 썸내일 자동 설정</string>
     <string name="menu_tag_filter">태그 필터</string>
+    <string name="menu_refresh">새로고침</string>
+    <string name="menu_show_all_tags">모든 태그 보기</string>
 
     <string name="login_input_pwd">비밀번호를 입력하세요.</string>
     <string name="login_retry_later">%1$d회 틀렸습니다. %2$d초 후에 다시 시도하세요."</string>
@@ -106,6 +108,8 @@
     <string name="detail_dialog_edit_tag">태그 편집</string>
     <string name="detail_dialog_edit_tag_complete">저장</string>
     <string name="detail_dialog_add_tag_message">추가할 태그를 입력해주세요.</string>
-    <string name="menu_refresh">새로고침</string>
+
+    <string name="tag_view_dialog_title">모든 태그</string>
+    <string name="tag_view_dialog_loading_tags">사용된 태그를 검색하고있습니다..</string>
 
 </resources>

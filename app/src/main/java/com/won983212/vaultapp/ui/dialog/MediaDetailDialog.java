@@ -42,11 +42,13 @@ public class MediaDetailDialog extends Dialog {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        // background blur
         WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
         layoutParams.flags = WindowManager.LayoutParams.FLAG_DIM_BEHIND;
         layoutParams.dimAmount = 0.8f;
         getWindow().setAttributes(layoutParams);
 
+        // apply layout file
         setContentView(R.layout.media_detail_dialog);
 
         ImageView titleIcon = findViewById(R.id.detail_dialog_titleIcon);
@@ -103,7 +105,7 @@ public class MediaDetailDialog extends Dialog {
         editTagButton.setOnClickListener((v) -> toggleEditMode(addTagButton, editTagButton));
     }
 
-    private void toggleEditMode(Button addTagButton, Button editTagButton){
+    private void toggleEditMode(Button addTagButton, Button editTagButton) {
         Context ctx = getContext();
         isEditMode = !isEditMode;
         if (isEditMode) {

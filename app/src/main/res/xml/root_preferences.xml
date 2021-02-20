@@ -32,11 +32,4 @@
             android:title="@string/setting_title_backup_now" />
     </PreferenceCategory>
 
-    <PreferenceCategory app:title="태그 관리">
-        <Preference
-            android:key="show_all_tags"
-            android:summary="파일에 붙은 모든 태그를 확인합니다."
-            android:title="모든 태그 확인" />
-    </PreferenceCategory>
-
 </PreferenceScreen>

@@ -48,6 +48,7 @@ import com.won983212.vaultapp.VaultApp;
 import com.won983212.vaultapp.ui.ItemEventCallback;
 import com.won983212.vaultapp.ui.MediaListAdapter;
 import com.won983212.vaultapp.ui.MediaListViewHolder;
+import com.won983212.vaultapp.ui.dialog.AllTagsDialog;
 import com.won983212.vaultapp.ui.dialog.MediaDetailDialog;
 import com.won983212.vaultapp.util.MediaItemSorts;
 import com.won983212.vaultapp.util.Usefuls;
@@ -259,6 +260,9 @@ public class MediaListActivity extends AppCompatActivity implements ItemEventCal
             return true;
         } else if (id == R.id.menu_refresh) {
             dataManager.setPath(dataManager.getPath());
+            return true;
+        } else if (id == R.id.menu_show_all_tags) {
+            new AllTagsDialog(this).show();
             return true;
         }
 
@@ -698,25 +702,35 @@ public class MediaListActivity extends AppCompatActivity implements ItemEventCal
             tagFilters.setVisibility(View.VISIBLE);
             tagFilters.removeAllViews();
             for (String tag : tagArr) {
-                if (tag.length() > 0) {
-                    Chip tagChip = new Chip(this);
-                    tagChip.setText(tag);
-                    tagChip.setCloseIconVisible(true);
-                    tagChip.setOnCloseIconClickListener(v -> {
-                        tagFilters.removeView(v);
-                        StringBuilder sb = new StringBuilder();
-                        for (int cnt = tagFilters.getChildCount(), i = 0; i < cnt; i++) {
-                            sb.append(((Chip) tagFilters.getChildAt(i)).getText());
-                            if (i < cnt - 1)
-                                sb.append(' ');
-                        }
-                        dataManager.setTagString(sb.toString());
-                    });
-                    tagFilters.addView(tagChip);
-                }
+                addTagImpl(tag);
             }
         } else {
             tagFilters.setVisibility(View.GONE);
+        }
+    }
+
+    public void addTagToList(String tag) {
+        tagFilters.setVisibility(View.VISIBLE);
+        dataManager.addTagString(tag);
+        addTagImpl(tag);
+    }
+
+    private void addTagImpl(String tag) {
+        if (tag.length() > 0) {
+            Chip tagChip = new Chip(this);
+            tagChip.setText(tag);
+            tagChip.setCloseIconVisible(true);
+            tagChip.setOnCloseIconClickListener(v -> {
+                tagFilters.removeView(v);
+                StringBuilder sb = new StringBuilder();
+                for (int cnt = tagFilters.getChildCount(), i = 0; i < cnt; i++) {
+                    sb.append(((Chip) tagFilters.getChildAt(i)).getText());
+                    if (i < cnt - 1)
+                        sb.append(' ');
+                }
+                dataManager.setTagString(sb.toString());
+            });
+            tagFilters.addView(tagChip);
         }
     }
 
