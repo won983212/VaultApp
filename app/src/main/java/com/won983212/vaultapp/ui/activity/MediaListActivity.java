@@ -145,6 +145,7 @@ public class MediaListActivity extends AppCompatActivity implements ItemEventCal
 
         if (dataManager.hasInitialzed()) {
             dataManager.setPath("/");
+            dataManager.setTagString(null);
         } else if (ROOT_FILE_MANAGER.requestSetRootPath(this, REQ_SET_ROOT_FILE_PATH)) {
             dataManager.setupDatas(this);
         }

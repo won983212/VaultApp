@@ -208,11 +208,13 @@ public class MediaDatabaseManager {
 
     public void setTagString(String tagsString) {
         tagFilters.clear();
-        for (String tag : tagsString.trim().split(" ")) {
-            if (tag.length() > 0)
-                tagFilters.add(tag);
+        if(tagsString != null) {
+            for (String tag : tagsString.trim().split(" ")) {
+                if (tag.length() > 0)
+                    tagFilters.add(tag);
+            }
+            setPath(path);
         }
-        setPath(path);
     }
 
     public void addTagString(String tag) {
