@@ -56,17 +56,14 @@ public class ResizableRecyclerView extends RecyclerView implements ScaleGestureD
         int span = Objects.requireNonNull(layoutManager).getSpanCount();
         float factor = detector.getScaleFactor();
         int orientation = getResources().getConfiguration().orientation;
-
-        final int min = orientation == Configuration.ORIENTATION_LANDSCAPE ? 4 : 2;
-        final int max = orientation == Configuration.ORIENTATION_LANDSCAPE ? 8 : 4;
-        final int by = orientation == Configuration.ORIENTATION_LANDSCAPE ? 2 : 1;
+        final int orientation_factor = orientation == Configuration.ORIENTATION_LANDSCAPE ? 2 : 1;
 
         if (factor > 1.7f) {
-            if (span > min)
-                animateRecyclerLayoutChange(layoutManager, span - by);
+            if (span > 2 * orientation_factor)
+                animateRecyclerLayoutChange(layoutManager, span - orientation_factor);
         } else if (factor < 0.6f) {
-            if (span < max)
-                animateRecyclerLayoutChange(layoutManager, span + by);
+            if (span < 4 * orientation_factor)
+                animateRecyclerLayoutChange(layoutManager, span + orientation_factor);
         }
     }
 

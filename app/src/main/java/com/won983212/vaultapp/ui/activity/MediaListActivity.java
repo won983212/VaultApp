@@ -517,7 +517,7 @@ public class MediaListActivity extends AppCompatActivity implements ItemEventCal
 
                         Usefuls.newTask(() -> {
                             if (fileExecutor.commit()) {
-                                showInfoToast(getString(R.string.toast_info_deleted_file, count));
+                                showInfoToast(getString(R.string.toast_info_deleted_files, count));
                             } else {
                                 showErrorToast(R.string.toast_error_cannot_delete_file);
                             }
@@ -530,7 +530,7 @@ public class MediaListActivity extends AppCompatActivity implements ItemEventCal
             };
 
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setMessage(getString(R.string.dialog_message_want_to_delete_file, count))
+            builder.setMessage(getString(R.string.dialog_message_want_to_delete_files, count))
                     .setPositiveButton(R.string.dialog_button_yes, onClickListener)
                     .setNegativeButton(R.string.dialog_button_no, onClickListener).show();
             return true;

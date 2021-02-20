@@ -31,7 +31,8 @@
     <string name="dialog_message_copying_file">파일을 복사하는 중입니다..</string>
     <string name="dialog_message_ejecting_file">파일을 꺼내는 중입니다..</string>
     <string name="dialog_message_deleting_file">파일을 삭제하는 중입니다..</string>
-    <string name="dialog_message_want_to_delete_file">정말로 선택한 %1$d개의 파일을 삭제하시겠습니까?</string>
+    <string name="dialog_message_want_to_delete_files">정말로 선택한 %1$d개의 파일을 삭제하시겠습니까?</string>
+    <string name="dialog_message_want_to_delete_file">정말로 파일을 삭제하시겠습니까?</string>
     <string name="dialog_message_moving_file">파일을 이동하는 중입니다..</string>
     <string name="dialog_message_eject_file">선택한 %1$d개 파일의 암호화를 해제하고 꺼냅니다. 꺼내면 \'수정날짜\' 정보가 삭제됩니다. 미리 DB백업해두세요.</string>
     <string name="dialog_message_loading_db">DB를 불러오고 있습니다.</string>
@@ -48,7 +49,8 @@
     <string name="toast_info_added_file">파일이 추가되었습니다.</string>
     <string name="toast_info_added_folder">폴더가 추가되었습니다.</string>
     <string name="toast_info_ejected_file">%1$d개 파일을 꺼냈습니다.</string>
-    <string name="toast_info_deleted_file">%1$d개의 파일이 삭제되었습니다.</string>
+    <string name="toast_info_deleted_file">파일이 삭제되었습니다.</string>
+    <string name="toast_info_deleted_files">%1$d개의 파일이 삭제되었습니다.</string>
     <string name="toast_info_changed_thumbnail">썸내일을 변경했습니다.</string>
     <string name="toast_info_set_thumbnail_auto">%1$d개 폴더의 썸내일을 자동으로 설정했습니다.</string>
     <string name="toast_info_cancelled_select">선택이 취소되었습니다.</string>

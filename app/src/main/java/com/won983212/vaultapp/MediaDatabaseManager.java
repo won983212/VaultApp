@@ -78,7 +78,7 @@ public class MediaDatabaseManager {
         final MediaViewerOverlay overlay = new MediaViewerOverlay(context);
         overlay.update(medias.get(index));
 
-        new StfalconImageViewer.Builder<>(context, medias, (imageView, media) ->
+        StfalconImageViewer<MediaItem> imageViewer = new StfalconImageViewer.Builder<>(context, medias, (imageView, media) ->
                 Glide.with(context).load(media.getDocumentURI())
                         .placeholder(media.isImage() ? R.drawable.ic_photo : R.drawable.ic_movie)
                         .into(imageView))
@@ -92,6 +92,8 @@ public class MediaDatabaseManager {
                 })
                 .withHiddenStatusBar(false)
                 .withOverlayView(overlay).show();
+
+        overlay.setImageViewer(imageViewer);
     }
 
     public void setDatabaseNotifyEvent(OnNotifyDataEvent e) {
@@ -101,6 +103,12 @@ public class MediaDatabaseManager {
     public MediaItem get(int pos) {
         synchronized (currentPathDataLock) {
             return currentPathData.get(pos);
+        }
+    }
+
+    public int indexOf(MediaItem item) {
+        synchronized (currentPathDataLock) {
+            return currentPathData.indexOf(item);
         }
     }
 
