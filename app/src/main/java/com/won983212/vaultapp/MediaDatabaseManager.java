@@ -28,6 +28,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.CountDownLatch;
 
 public class MediaDatabaseManager {
     private final HashMap<String, MediaItem> mediaItemCache = new HashMap<>();
@@ -213,13 +214,17 @@ public class MediaDatabaseManager {
                 if (tag.length() > 0)
                     tagFilters.add(tag);
             }
-            setPath(path);
         }
+        setPath(path);
     }
 
     public void addTagString(String tag) {
         tagFilters.add(tag);
         setPath(path);
+    }
+
+    public boolean hasTagFilter(){
+        return !tagFilters.isEmpty();
     }
 
     public String getTagString() {
@@ -282,7 +287,15 @@ public class MediaDatabaseManager {
     public void changeSortType(MediaItem item, int typeIndex) {
         item.sortType = typeIndex;
         db.mediaFileInfoDao().updateSortType(item.obfuscatedName, typeIndex);
-        sortAndNotify(null);
+
+        CountDownLatch latch = new CountDownLatch(1);
+        sortAndNotify(latch::countDown);
+        try {
+            latch.await();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         VaultApp.post(() -> {
             if (dbUpdateEvent != null) {
                 dbUpdateEvent.onDataSetUpdated();

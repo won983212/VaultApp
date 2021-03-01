@@ -144,7 +144,6 @@ public class MediaListActivity extends AppCompatActivity implements ItemEventCal
         });
 
         if (dataManager.hasInitialzed()) {
-            dataManager.setPath("/");
             dataManager.setTagString(null);
         } else if (ROOT_FILE_MANAGER.requestSetRootPath(this, REQ_SET_ROOT_FILE_PATH)) {
             dataManager.setupDatas(this);
@@ -183,7 +182,9 @@ public class MediaListActivity extends AppCompatActivity implements ItemEventCal
 
     @Override
     public void onBackPressed() {
-        if (!dataManager.exploreBack(1, () -> layoutManager.scrollToPosition(scrollStack.pop()))) {
+        if (dataManager.hasTagFilter()) {
+            clearTagList();
+        } else if (!dataManager.exploreBack(1, () -> layoutManager.scrollToPosition(scrollStack.pop()))) {
             super.onBackPressed();
         } else {
             breadcrumbs.removeLastItem();
@@ -248,7 +249,10 @@ public class MediaListActivity extends AppCompatActivity implements ItemEventCal
             builder.setSingleChoiceItems(MediaItemSorts.COMPARATOR_LABELS, selected, null);
             builder.setPositiveButton(R.string.dialog_button_ok, (dialog, which) -> {
                 ListView lw = ((AlertDialog) dialog).getListView();
-                Usefuls.newTask(() -> dataManager.changeSortType(folder, lw.getCheckedItemPosition()));
+                Usefuls.newTask(() -> {
+                    dataManager.changeSortType(folder, lw.getCheckedItemPosition());
+                    VaultApp.post(() -> layoutManager.scrollToPositionWithOffset(0, 0));
+                });
             });
             builder.setNegativeButton(R.string.dialog_button_cancel, null);
             builder.show();
@@ -714,6 +718,12 @@ public class MediaListActivity extends AppCompatActivity implements ItemEventCal
         tagFilters.setVisibility(View.VISIBLE);
         dataManager.addTagString(tag);
         addTagImpl(tag);
+    }
+
+    public void clearTagList() {
+        tagFilters.setVisibility(View.GONE);
+        tagFilters.removeAllViews();
+        dataManager.setTagString(null);
     }
 
     private void addTagImpl(String tag) {
