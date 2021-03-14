@@ -1,41 +1,108 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="350dp"
     android:layout_height="match_parent"
     android:layout_gravity="center"
-    android:minHeight="100dp"
-    android:orientation="vertical"
     android:padding="16dp">
 
     <TextView
-        android:layout_width="match_parent"
+        android:id="@+id/tag_view_title"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
         android:text="@string/tag_view_dialog_title"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/tag_view_ic_container"
+        app:layout_constraintEnd_toStartOf="@+id/tag_view_ic_container"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tag_view_ic_container" />
+
+    <LinearLayout
+        android:id="@+id/tag_view_ic_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/tag_view_addTagGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:padding="8dp"
+            android:src="@drawable/ic_group_add"
+            app:tint="@color/primary_500"
+            tools:ignore="ContentDescription" />
+
+        <ImageView
+            android:id="@+id/tag_view_removeTagGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:padding="8dp"
+            android:src="@drawable/ic_person_remove"
+            app:tint="@color/primary_500"
+            tools:ignore="ContentDescription" />
+
+        <ImageView
+            android:id="@+id/tag_view_addTag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:padding="8dp"
+            android:src="@drawable/ic_add_bookmark"
+            app:tint="@color/primary_500"
+            tools:ignore="ContentDescription" />
+
+        <ImageView
+            android:id="@+id/tag_view_deleteTag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:padding="8dp"
+            android:src="@drawable/ic_bookmark_remove"
+            app:tint="@color/primary_500"
+            tools:ignore="ContentDescription" />
+    </LinearLayout>
 
     <TextView
         android:id="@+id/tag_view_dialog_noTagText"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="8dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="16dp"
         android:text="@string/detail_dialog_no_tags"
-        android:visibility="gone" />
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tag_view_ic_container" />
 
     <ScrollView
+        android:id="@+id/scrollView2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="8dp"
-        android:layout_marginTop="32dp">
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@+id/tag_view_ic_container"
+        app:layout_constraintHeight_max="400dp">
 
-        <com.google.android.material.chip.ChipGroup
-            android:id="@+id/tag_view_dialog_tagGroup"
+        <LinearLayout
+            android:id="@+id/tag_view_tagContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:singleSelection="true" />
+            android:orientation="vertical" />
     </ScrollView>
 
+    <Button
+        android:id="@+id/tag_view_okButton"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_marginTop="16dp"
+        android:text="@string/dialog_button_ok"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/scrollView2" />
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

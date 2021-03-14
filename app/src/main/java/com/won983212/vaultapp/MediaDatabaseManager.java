@@ -20,14 +20,11 @@ import com.won983212.vaultapp.util.MediaItemSorts;
 import com.won983212.vaultapp.util.Usefuls;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.CountDownLatch;
 
 public class MediaDatabaseManager {
@@ -218,11 +215,6 @@ public class MediaDatabaseManager {
         setPath(path);
     }
 
-    public void addTagString(String tag) {
-        tagFilters.add(tag);
-        setPath(path);
-    }
-
     public boolean hasTagFilter(){
         return !tagFilters.isEmpty();
     }
@@ -236,16 +228,6 @@ public class MediaDatabaseManager {
                 sb.append(' ');
         }
         return sb.toString();
-    }
-
-    public Set<String> retrieveAllTags() {
-        HashSet<String> tags = new HashSet<>();
-        synchronized (currentPathDataLock) {
-            for (MediaItem item : currentPathData) {
-                tags.addAll(Arrays.asList(item.tags));
-            }
-        }
-        return tags;
     }
 
     public boolean containsName(String obfuscatedName) {

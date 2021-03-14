@@ -48,8 +48,8 @@ import com.won983212.vaultapp.VaultApp;
 import com.won983212.vaultapp.ui.ItemEventCallback;
 import com.won983212.vaultapp.ui.MediaListAdapter;
 import com.won983212.vaultapp.ui.MediaListViewHolder;
-import com.won983212.vaultapp.ui.dialog.AllTagsDialog;
 import com.won983212.vaultapp.ui.dialog.MediaDetailDialog;
+import com.won983212.vaultapp.ui.dialog.TagPresetDialog;
 import com.won983212.vaultapp.util.MediaItemSorts;
 import com.won983212.vaultapp.util.Usefuls;
 
@@ -267,7 +267,16 @@ public class MediaListActivity extends AppCompatActivity implements ItemEventCal
             dataManager.setPath(dataManager.getPath());
             return true;
         } else if (id == R.id.menu_show_all_tags) {
-            new AllTagsDialog(this).show();
+            TagPresetDialog dialog = new TagPresetDialog(this);
+            dialog.setTagSelectedListener((tags) -> {
+                if (tags.length() > 0) {
+                    tagFilters.setVisibility(View.VISIBLE);
+                    dataManager.setTagString(tags);
+                    for (String tag : tags.split(" "))
+                        addTagImpl(tag);
+                }
+            });
+            dialog.show();
             return true;
         }
 
@@ -712,12 +721,6 @@ public class MediaListActivity extends AppCompatActivity implements ItemEventCal
         } else {
             tagFilters.setVisibility(View.GONE);
         }
-    }
-
-    public void addTagToList(String tag) {
-        tagFilters.setVisibility(View.VISIBLE);
-        dataManager.addTagString(tag);
-        addTagImpl(tag);
     }
 
     public void clearTagList() {

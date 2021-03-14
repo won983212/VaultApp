@@ -14,7 +14,7 @@
     <string name="menu_set_thumbnail_auto">폴더 썸내일 자동 설정</string>
     <string name="menu_tag_filter">태그 필터</string>
     <string name="menu_refresh">새로고침</string>
-    <string name="menu_show_all_tags">모든 태그 보기</string>
+    <string name="menu_show_all_tags">태그 프리셋</string>
 
     <string name="login_input_pwd">비밀번호를 입력하세요.</string>
     <string name="login_retry_later">%1$d회 틀렸습니다. %2$d초 후에 다시 시도하세요."</string>
@@ -82,6 +82,8 @@
     <string name="toast_error_cannot_backup_db">DB 백업 실패</string>
     <string name="toast_error_cannot_change_name">이름을 변경할 수 없습니다.</string>
     <string name="toast_error_empty_tag_name">태그 이름을 입력해주세요.</string>
+    <string name="toast_error_empty_tag_group_name">그룹 이름을 입력해주세요.</string>
+    <string name="toast_error_empty_tag_group">태그 그룹이 없습니다. 그룹부터 생성해주세요.</string>
 
     <string name="actionbar_n_selected">%1$d개 선택됨</string>
     <string name="move_n_selected">%1$d개의 파일</string>
@@ -104,12 +106,16 @@
     <string name="detail_dialog_view_count">%1$d 회 열람함</string>
     <string name="detail_dialog_no_tags">설정된 태그 없음</string>
     <string name="detail_dialog_title">상세정보</string>
-    <string name="detail_dialog_add_tag">태그 추가</string>
     <string name="detail_dialog_edit_tag">태그 편집</string>
     <string name="detail_dialog_edit_tag_complete">저장</string>
-    <string name="detail_dialog_add_tag_message">추가할 태그를 입력해주세요.</string>
+    <string name="detail_dialog_add_tag">태그 추가</string>
 
-    <string name="tag_view_dialog_title">모든 태그</string>
-    <string name="tag_view_dialog_loading_tags">사용된 태그를 검색하고있습니다..</string>
+    <string name="tag_view_dialog_title">태그 프리셋</string>
+    <string name="tag_view_add_tag_group_title">그룹 추가</string>
+    <string name="tag_view_add_tag_group_message">추가할 그룹 이름을 입력해주세요. (콤마 및 공백으로 구분하여 여러개 추가가능)</string>
+    <string name="tag_view_add_tag_title">태그 추가</string>
+    <string name="tag_view_add_tag_message">추가할 태그를 입력하세요. (콤마 및 공백으로 구분하여 여러개 추가가능)</string>
+    <string name="tag_view_remove_tag_group_title">그룹 삭제</string>
+    <string name="tag_view_remove_tag_group_message">삭제할 그룹을 선택하세요.</string>
 
 </resources>

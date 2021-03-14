@@ -6,8 +6,10 @@ import android.net.Uri;
 import android.provider.DocumentsContract;
 import android.view.KeyEvent;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.StringRes;
@@ -16,6 +18,8 @@ import androidx.appcompat.app.AlertDialog;
 import com.won983212.vaultapp.ContentFileHandler;
 import com.won983212.vaultapp.R;
 import com.won983212.vaultapp.VaultApp;
+
+import java.util.List;
 
 public class Usefuls {
     public static void newTask(Runnable r) {
@@ -48,6 +52,33 @@ public class Usefuls {
         dialog.setCancelable(false);
         dialog.show();
         return dialog;
+    }
+
+    public static <T> void createSelectDialog(Context context, @StringRes int title, @StringRes int message, List<T> values, SelectionDialogAcceptListener callback) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle(title);
+        builder.setMessage(message);
+
+        FrameLayout container = new FrameLayout(context);
+        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+
+        int margin = context.getResources().getDimensionPixelSize(R.dimen.dialog_margin);
+        params.leftMargin = margin;
+        params.rightMargin = margin;
+        params.topMargin = margin;
+        params.bottomMargin = margin;
+
+        final Spinner groupIn = new Spinner(context);
+        ArrayAdapter<T> arrayAdapter = new ArrayAdapter<>(context, android.R.layout.simple_spinner_item, values);
+        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        groupIn.setAdapter(arrayAdapter);
+        groupIn.setLayoutParams(params);
+        container.addView(groupIn);
+
+        builder.setView(container);
+        builder.setPositiveButton(R.string.dialog_button_ok, (dialog, which) -> callback.onAccept(groupIn.getSelectedItemPosition()));
+        builder.setNegativeButton(R.string.dialog_button_cancel, (dialog, which) -> dialog.cancel());
+        builder.show();
     }
 
     public static void createInputDialog(Context context, @StringRes int title, @StringRes int message, String initialValue, DialogAcceptClickListener callback) {
@@ -131,5 +162,9 @@ public class Usefuls {
 
     public interface DialogAcceptClickListener {
         void onAccept(String input);
+    }
+
+    public interface SelectionDialogAcceptListener {
+        void onAccept(int selected);
     }
 }

@@ -90,17 +90,20 @@ public class MediaDetailDialog extends Dialog {
         Button addTagButton = findViewById(R.id.detail_dialog_addTag);
         Button editTagButton = findViewById(R.id.detail_dialog_editTag);
 
-        addTagButton.setOnClickListener((v) -> Usefuls.createInputDialog(getContext(), R.string.detail_dialog_add_tag, R.string.detail_dialog_add_tag_message, "", input -> {
-            String tags = input.trim().replaceAll(",", " ");
-            if (tags.length() > 0) {
-                for (String tag : tags.split(" "))
-                    addTag(tag);
-                updateTagGroupVisibility();
-                toggleEditMode(addTagButton, editTagButton);
-            } else {
-                Usefuls.threadSafeToast(getContext(), R.string.toast_error_empty_tag_name, Toast.LENGTH_LONG);
-            }
-        }));
+        addTagButton.setOnClickListener((v) -> {
+            TagPresetDialog dialog = new TagPresetDialog(getContext());
+            dialog.setTagSelectedListener(tagSelected -> {
+                if (tagSelected.length() > 0) {
+                    for (String tag : tagSelected.split(" "))
+                        addTag(tag);
+                    updateTagGroupVisibility();
+                    toggleEditMode(addTagButton, editTagButton);
+                } else {
+                    Usefuls.threadSafeToast(getContext(), R.string.toast_error_empty_tag_name, Toast.LENGTH_LONG);
+                }
+            });
+            dialog.show();
+        });
 
         editTagButton.setOnClickListener((v) -> toggleEditMode(addTagButton, editTagButton));
     }
