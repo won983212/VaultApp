@@ -19,12 +19,16 @@ public class MediaItemSorts {
 
     public static final Comparator<MediaItem> VIEW_COUNT_DESCENDING = (o1, o2) -> compareWithDirectoryFirst(o1, o2, Integer.compare(o2.viewCount, o1.viewCount));
 
+    public static final Comparator<MediaItem> VIDEO_LENGTH_ASCENDING = (o1, o2) -> compareWithDirectoryFirst(o1, o2, Long.compare(o1.videoLengthLong, o2.videoLengthLong));
+
+    public static final Comparator<MediaItem> VIDEO_LENGTH_DESCENDING = (o1, o2) -> compareWithDirectoryFirst(o1, o2, Long.compare(o2.videoLengthLong, o1.videoLengthLong));
+
     public static final String[] COMPARATOR_LABELS = {
-            "파일 이름 (오름차순)", "파일 이름 (내림차순)", "수정 날짜 (오름차순)", "수정 날짜 (내림차순)", "클릭 횟수 (오름차순)", "클릭 횟수 (내림차순)"
+            "파일 이름", "수정 날짜", "클릭 횟수", "영상 길이"
     };
 
     public static final List<Comparator<MediaItem>> COMPARATOR_OBJECTS = Arrays.asList(
-            FILE_NAME_ASCENDING, FILE_NAME_DESCENDING, MODIFIED_DATE_ASCENDING, MODIFIED_DATE_DESCENDING, VIEW_COUNT_ASCENDING, VIEW_COUNT_DESCENDING
+            FILE_NAME_ASCENDING, FILE_NAME_DESCENDING, MODIFIED_DATE_ASCENDING, MODIFIED_DATE_DESCENDING, VIEW_COUNT_ASCENDING, VIEW_COUNT_DESCENDING, VIDEO_LENGTH_ASCENDING, VIDEO_LENGTH_DESCENDING
     );
 
     private static int compareWithDirectoryFirst(MediaItem o1, MediaItem o2, int otherCompare) {

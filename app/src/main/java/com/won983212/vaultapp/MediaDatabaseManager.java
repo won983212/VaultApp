@@ -167,7 +167,7 @@ public class MediaDatabaseManager {
                 Collections.sort(currentPathData, MediaItemSorts.FILE_NAME_ASCENDING);
             } else {
                 MediaItem item = getByHash(Usefuls.getLastFolderName(path));
-                if (item.sortType >= 0 && item.sortType < MediaItemSorts.COMPARATOR_LABELS.length) {
+                if (item.sortType >= 0 && item.sortType < MediaItemSorts.COMPARATOR_OBJECTS.size()) {
                     Collections.sort(currentPathData, MediaItemSorts.COMPARATOR_OBJECTS.get(item.sortType));
                 } else {
                     Collections.sort(currentPathData, MediaItemSorts.FILE_NAME_ASCENDING);

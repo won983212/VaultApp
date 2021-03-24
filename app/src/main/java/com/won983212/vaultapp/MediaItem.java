@@ -16,6 +16,7 @@ public class MediaItem {
     public final String obfuscatedName;
     public final String type;
     public final String videoLength;
+    public final int videoLengthLong;
     public final long lastModified;
     public String[] tags;
     public String title;
@@ -37,6 +38,7 @@ public class MediaItem {
         this.tags = ent.tagListString.trim().length() > 0 ? ent.tagListString.split(",") : new String[0];
         this.path = ent.path;
         this.videoLength = ent.videoLength;
+        this.videoLengthLong = convertTimeStringToLong(ent.videoLength);
         this.folderThumbnailName = ent.thumbnailMediaName;
         this.sortType = ent.sortType;
         this.viewCount = ent.viewCount;
@@ -141,5 +143,18 @@ public class MediaItem {
     @Override
     public int hashCode() {
         return obfuscatedName.hashCode();
+    }
+
+    private static int convertTimeStringToLong(String timeString) {
+        int total = 0;
+        if(timeString.length() > 0) {
+            String[] timeData = timeString.split(":");
+            int modifier = 1;
+            for (int i = timeData.length - 1; i >= 0; i--) {
+                total += Integer.parseInt(timeData[i]) * modifier;
+                modifier *= 60;
+            }
+        }
+        return total;
     }
 }

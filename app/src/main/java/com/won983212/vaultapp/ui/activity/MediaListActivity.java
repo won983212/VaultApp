@@ -3,6 +3,7 @@ package com.won983212.vaultapp.ui.activity;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.ClipData;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -10,13 +11,20 @@ import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.SparseBooleanArray;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -50,6 +58,7 @@ import com.won983212.vaultapp.ui.MediaListAdapter;
 import com.won983212.vaultapp.ui.MediaListViewHolder;
 import com.won983212.vaultapp.ui.dialog.MediaDetailDialog;
 import com.won983212.vaultapp.ui.dialog.TagPresetDialog;
+import com.won983212.vaultapp.util.Logger;
 import com.won983212.vaultapp.util.MediaItemSorts;
 import com.won983212.vaultapp.util.Usefuls;
 
@@ -242,20 +251,8 @@ public class MediaListActivity extends AppCompatActivity implements ItemEventCal
             return true;
         } else if (id == R.id.menu_sorting) {
             MediaItem folder = dataManager.getByHash(Usefuls.getLastFolderName(dataManager.getPath()));
-            int selected = folder.sortType >= 0 && folder.sortType < MediaItemSorts.COMPARATOR_LABELS.length ? folder.sortType : 0;
-
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle(R.string.dialog_title_select_sort_type);
-            builder.setSingleChoiceItems(MediaItemSorts.COMPARATOR_LABELS, selected, null);
-            builder.setPositiveButton(R.string.dialog_button_ok, (dialog, which) -> {
-                ListView lw = ((AlertDialog) dialog).getListView();
-                Usefuls.newTask(() -> {
-                    dataManager.changeSortType(folder, lw.getCheckedItemPosition());
-                    VaultApp.post(() -> layoutManager.scrollToPositionWithOffset(0, 0));
-                });
-            });
-            builder.setNegativeButton(R.string.dialog_button_cancel, null);
-            builder.show();
+            int selected = folder.sortType >= 0 && folder.sortType < MediaItemSorts.COMPARATOR_OBJECTS.size() ? folder.sortType : 0;
+            createSortTypeDialog(folder, selected);
             return true;
         } else if (id == R.id.menu_tag_filter) {
             Usefuls.createInputDialog(this, R.string.dialog_title_tag_filter, R.string.dialog_message_tag_filter, dataManager.getTagString(), input -> {
@@ -708,6 +705,48 @@ public class MediaListActivity extends AppCompatActivity implements ItemEventCal
 
     public static SharedPreferences getPrivatePreferences() {
         return privatePreferences;
+    }
+
+    private void createSortTypeDialog(MediaItem folder, int defaultValue) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(R.string.dialog_title_select_sort_type);
+
+        LinearLayout container = new LinearLayout(this);
+        container.setOrientation(LinearLayout.VERTICAL);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+
+        int margin = getResources().getDimensionPixelSize(R.dimen.dialog_margin);
+        params.leftMargin = margin;
+        params.rightMargin = margin;
+        params.topMargin = margin;
+
+        final Spinner comparatorIn = new Spinner(this);
+        ArrayAdapter<String> comparatorArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, MediaItemSorts.COMPARATOR_LABELS);
+        comparatorArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        comparatorIn.setAdapter(comparatorArrayAdapter);
+        comparatorIn.setLayoutParams(params);
+        comparatorIn.setSelection(defaultValue / 2);
+        container.addView(comparatorIn);
+
+        final Spinner orderIn = new Spinner(this);
+        ArrayAdapter<String> orderArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, new String[]{"오름차순", "내림차순"});
+        orderArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        orderIn.setAdapter(orderArrayAdapter);
+        orderIn.setLayoutParams(params);
+        orderIn.setSelection(defaultValue % 2);
+        container.addView(orderIn);
+
+        builder.setView(container);
+        builder.setPositiveButton(R.string.dialog_button_ok, (dialog, which) -> {
+            final int index = comparatorIn.getSelectedItemPosition() * 2 + orderIn.getSelectedItemPosition();
+            Logger.i(index);
+            Usefuls.newTask(() -> {
+                dataManager.changeSortType(folder, index);
+                VaultApp.post(() -> layoutManager.scrollToPositionWithOffset(0, 0));
+            });
+        });
+        builder.setNegativeButton(R.string.dialog_button_cancel, (dialog, which) -> dialog.cancel());
+        builder.show();
     }
 
     public void updateTagList(String tags) {
