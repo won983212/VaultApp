@@ -206,7 +206,7 @@ public class MediaDatabaseManager {
 
     public void setTagString(String tagsString) {
         tagFilters.clear();
-        if(tagsString != null) {
+        if (tagsString != null) {
             for (String tag : tagsString.trim().split(" ")) {
                 if (tag.length() > 0)
                     tagFilters.add(tag);
@@ -215,7 +215,7 @@ public class MediaDatabaseManager {
         setPath(path);
     }
 
-    public boolean hasTagFilter(){
+    public boolean hasTagFilter() {
         return !tagFilters.isEmpty();
     }
 

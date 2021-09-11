@@ -147,7 +147,7 @@ public class MediaItem {
 
     private static int convertTimeStringToLong(String timeString) {
         int total = 0;
-        if(timeString.length() > 0) {
+        if (timeString.length() > 0) {
             String[] timeData = timeString.split(":");
             int modifier = 1;
             for (int i = timeData.length - 1; i >= 0; i--) {

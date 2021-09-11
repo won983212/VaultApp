@@ -28,13 +28,21 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private static final int RETRY_TIME_SEC = 60;
 
     private TextView alertTextView;
+    private final RadioButton[] pwdButtons = new RadioButton[4];
+
     private SharedPreferences preferences;
-    private final RadioButton[] buttons = new RadioButton[4];
     private final char[] password = new char[4];
     private String initialPwd = null;
     private int cursor = 0;
     private int tryCount = 0;
-    private int pwdMode = 0; // 0: set initlal pwd, 1: input pwd again, 2: input pwd
+
+    /**
+     * 0: Set initlal pwd <br>
+     * 1: Input pwd again <br>
+     * 2: Input pwd
+     */
+    private int pwdInputMode = 0;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +52,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         preferences = getSharedPreferences("password", MODE_PRIVATE);
         alertTextView = findViewById(R.id.alertTextView);
 
+        // register clickListener of all number pad buttons
         TableLayout numberPad = findViewById(R.id.numberPad);
         for (int i = 0; i < numberPad.getChildCount(); i++) {
             TableRow row = (TableRow) numberPad.getChildAt(i);
@@ -54,16 +63,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         LinearLayout passwordViewer = findViewById(R.id.passwordViewer);
         for (int i = 0; i < passwordViewer.getChildCount(); i++) {
-            buttons[i] = (RadioButton) passwordViewer.getChildAt(i);
+            pwdButtons[i] = (RadioButton) passwordViewer.getChildAt(i);
         }
 
         checkRetryable();
 
+        // check if first login
         if (!preferences.contains(PWD_KEY)) {
-            pwdMode = 0;
+            pwdInputMode = 0;
             alertTextView.setText(R.string.login_set_initial_pwd);
         } else {
-            pwdMode = 2;
+            pwdInputMode = 2;
         }
     }
 
@@ -72,8 +82,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             long curr = System.currentTimeMillis();
             long diff = curr - preferences.getLong(RETRY_TIMER_KEY, curr);
             if (diff < RETRY_TIME_SEC * 1000) {
+                int remainingSeconds = RETRY_TIME_SEC - (int) Math.ceil(diff / 1000.0);
                 tryCount = MAX_RETRY;
-                alertTextView.setText(getResources().getString(R.string.login_retry_later, MAX_RETRY, RETRY_TIME_SEC - (int) Math.ceil(diff / 1000.0)));
+                alertTextView.setText(getResources().getString(R.string.login_retry_later, MAX_RETRY, remainingSeconds));
                 return false;
             } else {
                 tryCount = 0;
@@ -109,7 +120,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private void processCheckPassword() {
         if (!checkRetryable())
             return;
-        if (pwdMode == 0) {
+        if (pwdInputMode == 0) {
             if (initialPwd == null) {
                 alertTextView.setText(R.string.login_set_pwd_again);
                 initialPwd = String.valueOf(password);
@@ -123,7 +134,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 }
                 initialPwd = null;
             }
-        } else if (pwdMode == 2) {
+        } else if (pwdInputMode == 2) {
             if (checkPassword()) {
                 alertTextView.setText(R.string.login_go_app);
                 success();
@@ -142,17 +153,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void onClick(View v) {
         char buttonLabel = ((Button) v).getText().charAt(0);
         if (buttonLabel >= '0' && buttonLabel <= '9') {
-            buttons[cursor].setChecked(true);
+            pwdButtons[cursor].setChecked(true);
             password[cursor++] = buttonLabel;
             if (cursor >= 4) {
                 processCheckPassword();
-                for (RadioButton button : buttons)
+                for (RadioButton button : pwdButtons)
                     button.setChecked(false);
                 cursor = 0;
             }
         } else {
             if (cursor > 0) {
-                buttons[--cursor].setChecked(false);
+                pwdButtons[--cursor].setChecked(false);
             }
         }
     }
